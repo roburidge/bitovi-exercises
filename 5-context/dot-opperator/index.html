@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+	<head>
+		<title>JS Tests</title>
+		<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.18.0.css"/>
+	</head>
+
+	<body>
+		<div id="qunit"></div>
+		<div id="qunit-fixture"></div>
+
+		<script src="index.js"></script>
+		<script src="http://code.jquery.com/qunit/qunit-1.18.0.js"></script>
+		<script type="text/javascript">
+			var Person = function(name) {
+				this.name = name;
+			}
+
+			Person.prototype.species = 'Homo Sapien';
+			Person.prototype.speak =function(toWhom) {
+				return 'Hello ' + toWhom + '. My name is ' + this.name + '.';
+			}
+
+			module('new, dot, and dotcall');
+
+			test('DOT', function(){
+        var person = new Person('Alexis');
+        var species = DOT(person, 'species');
+        equal(species, 'Homo Sapien', 'property accessed');
+        equal(DOT(person, 'foobar'), undefined, 'property not found');
+      });
+
+			test('DOTCALL', function() {
+				var person = new Person('Alexis');
+				var speak = DOTCALL(person, 'speak', ['Justin']);
+
+				var greet = 'Hello Justin. My name is Alexis.';
+				equal(speak, greet, 'method called with argument');
+			});
+		</script>
+	</body>
+</html>
